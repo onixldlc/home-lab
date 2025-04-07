@@ -1,0 +1,24 @@
+networks:
+  internal-network:
+    name: docker-internal
+
+services:
+  main-proxy:
+    image: onixldlc/nginx-ui:latest
+    container_name: nginx-ui
+    networks:
+      internal-network:
+    restart: unless-stopped
+    volumes:
+      - "./config/nginx/conf.d:/etc/nginx/conf.d"
+      - "./config/nginx/stream-enabled:/etc/nginx/stream-enabled"
+      - "./config/nginx/stream-available:/etc/nginx/stream-available"
+      - "./config/nginx/sites-enabled:/etc/nginx/sites-enabled"
+      - "./config/nginx/sites-available:/etc/nginx/sites-available"
+      - "./config/nginx-ui:/etc/nginx-ui"
+    environment:
+      - TZ=Etc/UTC
+      - SERVER_NAME=proxy.cloud.local
+    ports:
+      - 80:80
+      - 443:443
