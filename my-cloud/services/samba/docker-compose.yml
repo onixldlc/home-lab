@@ -1,0 +1,20 @@
+networks:
+  internal-network:
+    name: docker-internal
+    external: true
+
+services:
+  samba:
+    image: dockurr/samba
+    container_name: samba
+    environment:
+      NAME: "Data"
+      USER: "mitm"
+      PASS: "secret"
+    networks:
+      internal-network:
+    #ports:
+    #  - 445:445
+    volumes:
+      - /srv/smb:/storage
+    restart: always
