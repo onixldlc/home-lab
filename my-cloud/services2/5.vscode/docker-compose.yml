@@ -1,0 +1,42 @@
+networks:
+  router-network:
+    name: docker-vlan
+    external: true
+  internal-network:
+    driver: bridge
+
+services:
+  vscode:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: vscode
+    networks:
+      internal-network:
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - PASSWORD=somesecretpass
+      - SUDO_PASSWORD=somemoresecretpassyaknow
+      - TZ=Etc/UTC
+      - DEFAULT_WORKSPACE=/config/config #optional
+      - EXTENSIONS_GALLERY=$GALLERY
+    volumes:
+      - ./vscode:/config
+      - ../../docker:/docker
+    restart: unless-stopped
+    labels:
+      io.portainer.accesscontrol.teams: dev
+
+  caddy:
+    image: caddy:alpine
+    container_name: vscode-proxy
+    networks:
+      router-network:
+        ipv4_address: x.x.21.3
+      internal-network:
+    restart: always
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+    depends_on:
+      - vscode

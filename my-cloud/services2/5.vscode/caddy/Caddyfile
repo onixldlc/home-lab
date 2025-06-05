@@ -1,0 +1,23 @@
+# Basic Caddyfile - adjust domain and settings as needed
+{
+    # Global options
+    admin off # Disable the admin API
+}
+
+# Replace with your actual domain
+#vscode.local {
+#    # Reverse proxy to VS Code server
+#    reverse_proxy vscode:8443 {
+#        transport http {
+#            tls_insecure_skip_verify
+#        }
+#    }
+#
+#    # Uncomment if you want to use your own certificates instead of Let's Encrypt
+#    # tls /certs/cert.pem /certs/key.pem
+#}
+
+# Or use IP directly if preferred
+vscode.local x.x.21.3 {
+    reverse_proxy vscode:8443
+}

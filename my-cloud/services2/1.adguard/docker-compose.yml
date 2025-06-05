@@ -1,0 +1,16 @@
+networks:
+  adguard-network:
+    name: docker-vlan
+    external: true
+
+services:
+  adguardhome:
+    networks:
+      adguard-network:
+        ipv4_address: x.x.20.11
+    container_name: adguardhome
+    image: adguard/adguardhome
+    restart: unless-stopped
+    volumes:
+      - ./work:/opt/adguardhome/work
+      - ./conf:/opt/adguardhome/conf

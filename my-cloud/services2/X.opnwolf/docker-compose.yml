@@ -1,0 +1,34 @@
+networks:
+  portainer-network:
+    name: docker-vlan
+    external: true
+  internal-network:
+    driver: bridge
+
+services:
+  librewolf:
+    image: lscr.io/linuxserver/librewolf:latest
+    container_name: librewolf
+    networks:
+      portainer-network:
+        ipv4_address: x.x.21.4
+      internal-network:
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - LIBREWOLF_CLI=https://whatismyipaddress.com/
+    volumes:
+      - ./config:/config
+    shm_size: "1gb"
+    restart: unless-stopped
+
+  opnsocket:
+    image: onixldlc/opnsocks:latest
+    container_name: librewolf-socket
+    networks:
+      internal-network:
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - CONFIG_BASE64=${CONFIG_BASE64}
