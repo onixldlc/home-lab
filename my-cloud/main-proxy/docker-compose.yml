@@ -11,8 +11,8 @@ services:
     restart: unless-stopped
     volumes:
       - "./config/nginx/conf.d:/etc/nginx/conf.d"
-      - "./config/nginx/stream-enabled:/etc/nginx/stream-enabled"
-      - "./config/nginx/stream-available:/etc/nginx/stream-available"
+      - "./config/nginx/streams-enabled:/etc/nginx/streams-enabled"
+      - "./config/nginx/streams-available:/etc/nginx/streams-available"
       - "./config/nginx/sites-enabled:/etc/nginx/sites-enabled"
       - "./config/nginx/sites-available:/etc/nginx/sites-available"
       - "./config/nginx-ui:/etc/nginx-ui"
