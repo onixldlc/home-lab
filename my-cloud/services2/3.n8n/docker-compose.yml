@@ -11,8 +11,8 @@ services:
       portainer-network:
         ipv4_address: x.x.21.2
     volumes:
-      - ./data:/home/node/.n8n
-      - ./cert:/home/node/.cert
+      - ./data:/root/.n8n
+      - ./cert:/root/.cert
       - ./output:/opt/output
     environment:
       N8N_SECURE_COOKIE: "false"
@@ -22,4 +22,5 @@ services:
       N8N_SSL_CERT: "/home/node/.cert/cert.pem"
       N8N_SSL_KEY: "/home/node/.cert/key.pem"
       N8N_RUNNERS_ENABLED: "true"
+      N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
     restart: unless-stopped
